@@ -10,7 +10,12 @@ module.exports = function (fileInfo, api) {
     })
     .forEach((path) => {
       // Reemplazar cualquier propiedad de styled con 'div'
-      path.node.property.name = "div";
+      path.node.property.name =
+        path.node.property.name +
+        `.withConfig({
+          shouldForwardProp: (prop) =>
+          !["bgColor", "textColor", "hoverColor"].includes(prop),
+      })`;
     })
     .toSource();
 };
