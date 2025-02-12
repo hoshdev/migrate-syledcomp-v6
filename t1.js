@@ -14,7 +14,7 @@ module.exports = function (fileInfo, api) {
         path.node.property.name +
         `.withConfig({
           shouldForwardProp: (prop) =>
-          !["bgColor", "textColor", "hoverColor"].includes(prop),
+          !TAGS.includes(prop),
       })`;
     })
     .toSource();
