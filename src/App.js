@@ -1,7 +1,8 @@
 import React from "react";
-import Button from "./components/Styles/Button";
+import Button, { ButtonWithAttrs } from "./components/Styles/Button";
 import Container, {
   ContainerWithCustomBorder,
+  ContainerWithCustomBorderWitAttrs,
 } from "./components/Styles/Container";
 
 const App = () => {
@@ -10,11 +11,17 @@ const App = () => {
       ¡Hola, React!
       <br />
       <Button textColor="black" onClick={() => alert("click")}>
-        Click Here{" "}
+        Button
       </Button>
+      <ButtonWithAttrs textColor="black" onClick={() => alert("click")}>
+        Button with Attrs
+      </ButtonWithAttrs>
       <ContainerWithCustomBorder customBorder="2px solid red">
         Container with custom border
       </ContainerWithCustomBorder>
+      <ContainerWithCustomBorderWitAttrs customBorder="2px solid red">
+        Container with custom border
+      </ContainerWithCustomBorderWitAttrs>
     </Container>
   );
 };
