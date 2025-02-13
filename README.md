@@ -38,5 +38,17 @@ This allows you to migrate your codebase step by step.
   npx jscodeshift -t ./transformStyleCompV6.js ./src
   ```
 - Review the changes before committing them to your repository.
+- **Ignore Custom Props**: If you want to prevent specific custom props from causing warnings, you should add them to the `TAGS_SET`. This will exclude those props from being forwarded to the DOM. For example:
+
+  ```js
+  const TAGS_SET = new Set([
+    "customProp", // Add the props you want to ignore here
+    "isActive",
+    "theme",
+    "myCustomStyle",
+  ]);
+  ```
+
+  Make sure to modify the transformation script to check for these props and prevent them from being passed to native HTML elements.
 
 Happy coding! 🚀
