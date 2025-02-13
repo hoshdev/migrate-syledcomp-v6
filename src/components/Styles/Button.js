@@ -18,15 +18,11 @@ const Button = styled.button.withConfig({
   }
 `;
 
-export const ButtonWithAttrs = styled.button
-  .withConfig({
-    shouldForwardProp: (prop) => !TAGS.includes(prop),
-  })
-  .attrs((props) => ({
-    bgColor: props.bgColor || "green",
-    textColor: props.textColor || "white",
-    hoverColor: props.hoverColor || "#2980b9",
-  }))`
+export const ButtonWithAttrs = styled.button.attrs((props) => ({
+  bgColor: props.bgColor || "green",
+  textColor: props.textColor || "white",
+  hoverColor: props.hoverColor || "#2980b9",
+}))`
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.textColor};
   padding: 10px 20px;
