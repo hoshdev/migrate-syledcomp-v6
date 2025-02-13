@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TAGS } from "./const";
 
-const Button = styled.button.withConfig({
-  shouldForwardProp: (prop) => !TAGS.includes(prop),
-})`
+const Button = styled.button`
   background-color: ${(props) => props.bgColor || "#3498db"};
   color: ${(props) => props.textColor || "white"};
   padding: 10px 20px;

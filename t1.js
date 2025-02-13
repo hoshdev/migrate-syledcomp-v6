@@ -4,26 +4,30 @@ module.exports = function (fileInfo, api) {
 
   // Función para generar .withConfig(...)
   const createWithConfig = (node) =>
-    j.callExpression(j.memberExpression(node, j.identifier("withConfig")), [
-      j.objectExpression([
-        j.objectProperty(
-          j.identifier("shouldForwardProp"),
-          j.arrowFunctionExpression(
-            [j.identifier("prop")],
-            j.unaryExpression(
-              "!",
-              j.callExpression(
-                j.memberExpression(
-                  j.identifier("TAGS"),
-                  j.identifier("includes")
-                ),
-                [j.identifier("prop")]
+    j.callExpression(
+      j.memberExpression(node, j.identifier("withConfig")), // node.withConfig
+      [
+        j.objectExpression([
+          j.objectProperty(
+            j.identifier("shouldForwardProp"),
+            j.arrowFunctionExpression(
+              [j.identifier("prop")], // (prop) =>
+              j.unaryExpression(
+                // !TAGS_SET.has(prop)
+                "!",
+                j.callExpression(
+                  j.memberExpression(
+                    j.identifier("TAGS_SET"),
+                    j.identifier("has")
+                  ),
+                  [j.identifier("prop")]
+                )
               )
             )
-          )
-        ),
-      ]),
-    ]);
+          ),
+        ]),
+      ]
+    );
 
   // Modificar styled(Nombre) agregando .withConfig(...)
   root
