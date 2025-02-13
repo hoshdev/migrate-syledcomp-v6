@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TAGS_SET } from "./const";
 
-const Button = styled.button.withConfig({
-  shouldForwardProp: prop => !TAGS_SET.has(prop)
-})`
+const Button = styled.button`
   background-color: ${(props) => props.bgColor || "#3498db"};
   color: ${(props) => props.textColor || "white"};
   padding: 10px 20px;
@@ -18,9 +16,7 @@ const Button = styled.button.withConfig({
   }
 `;
 
-export const ButtonWithAttrs = styled.button.withConfig({
-  shouldForwardProp: prop => !TAGS_SET.has(prop)
-}).attrs((props) => ({
+export const ButtonWithAttrs = styled.button.attrs((props) => ({
   bgColor: props.bgColor || "green",
   textColor: props.textColor || "white",
   hoverColor: props.hoverColor || "#2980b9",
