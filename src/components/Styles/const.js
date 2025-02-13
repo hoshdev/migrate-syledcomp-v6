@@ -13,3 +13,7 @@ export const TAGS_SET = new Set([
   "borderRadius",
   "customBorder",
 ]);
+
+const WITHCONFIG_SETUP = {
+  shouldForwardProp: (prop) => !TAGS_SET.has(prop),
+};
