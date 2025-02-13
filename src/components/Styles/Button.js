@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TAGS } from "./const";
+import { TAGS_SET } from "./const";
 
 const Button = styled.button`
   background-color: ${(props) => props.bgColor || "#3498db"};
