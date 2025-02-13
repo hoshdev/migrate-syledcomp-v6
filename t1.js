@@ -2,11 +2,32 @@ module.exports = function (fileInfo, api) {
   const j = api.jscodeshift;
   const root = j(fileInfo.source);
 
+  // Función para generar .withConfig(...)
+  const createWithConfig = (node) =>
+    j.callExpression(j.memberExpression(node, j.identifier("withConfig")), [
+      j.objectExpression([
+        j.objectProperty(
+          j.identifier("shouldForwardProp"),
+          j.arrowFunctionExpression(
+            [j.identifier("prop")],
+            j.unaryExpression(
+              "!",
+              j.callExpression(
+                j.memberExpression(
+                  j.identifier("TAGS"),
+                  j.identifier("includes")
+                ),
+                [j.identifier("prop")]
+              )
+            )
+          )
+        ),
+      ]),
+    ]);
+
   // Modificar styled(Nombre) agregando .withConfig(...)
   root
-    .find(j.CallExpression, {
-      callee: { name: "styled" }, // styled(Nombre)
-    })
+    .find(j.CallExpression, { callee: { name: "styled" } }) // styled(Nombre)
     .forEach((path) => {
       const hasWithConfig =
         path.parentPath.value &&
@@ -14,39 +35,13 @@ module.exports = function (fileInfo, api) {
         path.parentPath.value.property.name === "withConfig";
 
       if (!hasWithConfig) {
-        path.replace(
-          j.callExpression(
-            j.memberExpression(path.node, j.identifier("withConfig")),
-            [
-              j.objectExpression([
-                j.objectProperty(
-                  j.identifier("shouldForwardProp"),
-                  j.arrowFunctionExpression(
-                    [j.identifier("prop")],
-                    j.unaryExpression(
-                      "!",
-                      j.callExpression(
-                        j.memberExpression(
-                          j.identifier("TAGS"),
-                          j.identifier("includes")
-                        ),
-                        [j.identifier("prop")]
-                      )
-                    )
-                  )
-                ),
-              ]),
-            ]
-          )
-        );
+        path.replace(createWithConfig(path.node));
       }
     });
 
   // Modificar styled.div, styled.button, etc.
   root
-    .find(j.MemberExpression, {
-      object: { name: "styled" }, // styled.Algo
-    })
+    .find(j.MemberExpression, { object: { name: "styled" } }) // styled.Algo
     .forEach((path) => {
       if (
         !(
@@ -55,31 +50,7 @@ module.exports = function (fileInfo, api) {
           path.node.property.name.includes("withConfig")
         )
       ) {
-        path.replace(
-          j.memberExpression(
-            path.node,
-            j.callExpression(j.identifier("withConfig"), [
-              j.objectExpression([
-                j.objectProperty(
-                  j.identifier("shouldForwardProp"),
-                  j.arrowFunctionExpression(
-                    [j.identifier("prop")],
-                    j.unaryExpression(
-                      "!",
-                      j.callExpression(
-                        j.memberExpression(
-                          j.identifier("TAGS"),
-                          j.identifier("includes")
-                        ),
-                        [j.identifier("prop")]
-                      )
-                    )
-                  )
-                ),
-              ]),
-            ])
-          )
-        );
+        path.replace(createWithConfig(path.node));
       }
     });
 
