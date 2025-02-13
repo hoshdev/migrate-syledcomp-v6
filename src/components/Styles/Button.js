@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { TAGS } from "./const";
 
 const Button = styled.button.withConfig({
-  shouldForwardProp: (prop) => !TAGS.includes(prop),
-})`
+              shouldForwardProp: (prop) =>
+              !TAGS.includes(prop),
+          })`
   background-color: ${(props) => props.bgColor || "#3498db"};
   color: ${(props) => props.textColor || "white"};
   padding: 10px 20px;

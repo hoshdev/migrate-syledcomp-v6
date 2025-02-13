@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { TAGS } from "./const";
 
 const Container = styled.div.withConfig({
-  shouldForwardProp: (prop) => !TAGS.includes(prop),
-})`
+              shouldForwardProp: (prop) =>
+              !TAGS.includes(prop),
+          })`
   margin: 0 auto;
   padding: ${(props) => props.padding || "16px"};
   display: ${(props) => props.display || "flex"};
@@ -14,7 +15,9 @@ const Container = styled.div.withConfig({
   border-radius: ${(props) => props.borderRadius || "8px"};
 `;
 
-export const ContainerWithCustomBorder = styled(Container)`
+export const ContainerWithCustomBorder = styled(Container).withConfig({
+  shouldForwardProp: prop => !TAGS.includes(prop)
+})`
   border: ${(props) => props.customBorder || "1px solid grey"};
   background-color: white;
 `;

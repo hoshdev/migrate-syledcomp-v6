@@ -1,1 +1,7 @@
-export const TAGS = ["bgColor", "textColor", "hoverColor", "borderRadius"];
+export const TAGS = [
+  "bgColor",
+  "textColor",
+  "hoverColor",
+  "borderRadius",
+  "customBorder",
+];
