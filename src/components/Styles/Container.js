@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { TAGS } from "./const";
+import { TAGS_SET } from "./const";
 
-const Container = styled.div`
+const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) => !TAGS_SET.has(prop),
+})`
   margin: 0 auto;
   padding: ${(props) => props.padding || "16px"};
   display: ${(props) => props.display || "flex"};
@@ -12,16 +14,20 @@ const Container = styled.div`
   border-radius: ${(props) => props.borderRadius || "8px"};
 `;
 
-export const ContainerWithCustomBorder = styled(Container)`
+export const ContainerWithCustomBorder = styled(Container).withConfig({
+  shouldForwardProp: (prop) => !TAGS_SET.has(prop),
+})`
   border: ${(props) => props.customBorder || "1px solid grey"};
   background-color: white;
 `;
 
-export const ContainerWithCustomBorderWitAttrs = styled(Container).attrs(
-  (props) => ({
-    customBorder: props.customBorder || "1px solid pink",
+export const ContainerWithCustomBorderWitAttrs = styled(Container)
+  .withConfig({
+    shouldForwardProp: (prop) => !TAGS_SET.has(prop),
   })
-)`
+  .attrs((props) => ({
+    customBorder: props.customBorder || "1px solid pink",
+  }))`
   border: ${(props) => props.customBorder};
   background-color: white;
 `;
